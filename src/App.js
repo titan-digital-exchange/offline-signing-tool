@@ -28,11 +28,21 @@ export default class Home extends Component {
     const signature = keyPair.sign(Buffer.from(this.state.sigHash, 'hex')).toScriptSignature(bitcoin.Transaction.SIGHASH_ALL).toString('hex');
     this.setState({signature});
   }
-
+  copyToClipboard = str => {
+    const el = document.createElement('textarea');
+    el.value = str;
+    el.setAttribute('readonly', '');
+    el.style.position = 'absolute';
+    el.style.left = '-9999px';
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+  }  
   render() {
     const { wif, sigHash, signature } = this.state;
     return (
-      <div className="container" data-tid="container">
+      <div className="container">
         <div className="row">
           <div className="col">
             <h2>Offline Signing Tool</h2>
@@ -41,24 +51,28 @@ export default class Home extends Component {
         <div className="row">
           <div className="col">
             <form>
-              <label>WIF</label>
-              <input value={wif} onChange={this.handleOnChange} type="string" id="wif" />
-
-              <label>Sig Hash</label>
-              <input value={sigHash} onChange={this.handleOnChange} type="string" id="sigHash" />
-
-              <a onClick={() => this.createSig()} href="#">
+              <div className="form-group">
+                <label>WIF</label>
+                <input className="form-control" value={wif} onChange={this.handleOnChange} type="string" id="wif" />
+              </div>
+              <div className="form-group">
+                <label>Sig Hash</label>
+                <input className="form-control" value={sigHash} onChange={this.handleOnChange} type="string" id="sigHash" />
+              </div>
+              <button className="btn btn-success" onClick={() => this.createSig()}>
                 Submit
-              </a>
+              </button>
             </form>
-            {signature && 
-              <p>
-                {`Signature: ${signature}`}
-              </p>
-            }
-            <h3>
-
-            </h3>
+            <div className="alert alert-success" style={{ marginTop: '1rem' }}>
+              <h4 className="alert-heading">Signature</h4>
+              {signature && <div>
+                <pre className="mb-0">{signature}</pre>
+                <button
+                  className="btn btn-info"
+                  onClick={() => this.copyToClipboard(signature)}
+                >Copy</button>
+              </div>}
+            </div>
           </div>
         </div>
       </div>
