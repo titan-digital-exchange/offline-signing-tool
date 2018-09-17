@@ -5,7 +5,8 @@
   "dependencies": {
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
-    "react-scripts": "1.1.5"
+    "react-scripts": "1.1.5",
+    "bitcoinjs-lib": "git://github.com/wesleyfsmith/bitcoinjs-lib.git"
   },
   "scripts": {
     "start": "react-scripts start",
