@@ -60,7 +60,7 @@ export default class Home extends Component {
                 <input className="form-control" value={sigHash} onChange={this.handleOnChange} type="string" id="sigHash" />
               </div>
               <button className="btn btn-success" onClick={() => this.createSig()}>
-                Submit
+                Sign
               </button>
             </form>
             <div className="alert alert-success" style={{ marginTop: '1rem' }}>
@@ -68,6 +68,7 @@ export default class Home extends Component {
               {signature && <div>
                 <pre className="mb-0">{signature}</pre>
                 <button
+                  style={{ marginTop: '1rem' }}
                   className="btn btn-info"
                   onClick={() => this.copyToClipboard(signature)}
                 >Copy</button>
