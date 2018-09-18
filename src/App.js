@@ -59,7 +59,7 @@ export default class Home extends Component {
                 <label>Sig Hash</label>
                 <input className="form-control" value={sigHash} onChange={this.handleOnChange} type="string" id="sigHash" />
               </div>
-              <button className="btn btn-success" onClick={() => this.createSig()}>
+              <button type="button" className="btn btn-success" onClick={this.createSig}>
                 Sign
               </button>
             </form>
