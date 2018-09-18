@@ -1,0 +1,11 @@
+title Offline Signing Tool protocol
+
+note left of Titan: Download and sign sig hashes
+Titan->Seller-Hot: Titan Signed sighashes (Sig | Hashes)
+Seller-Hot->Seller-Cold: Transfer Titan Signed signhashes
+note right of Seller-Cold: Check signature
+note right of Seller-Cold: Parse sig  hashes
+note right of Seller-Cold: Sign transaction
+Seller-Cold->Seller-Hot: Transfer Transaction Signature
+Seller-Hot->Titan: Transaction signature
+note left of Titan: Do Magic Make Happen
