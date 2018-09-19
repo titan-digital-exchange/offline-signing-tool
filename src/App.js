@@ -24,7 +24,6 @@ export default class Home extends Component {
       wif: 0x49
     };
     const keyPair = bitcoin.ECPair.fromWIF(this.state.wif, network);
-    console.log(this.state.sigHash);
     const signature = keyPair.sign(Buffer.from(this.state.sigHash, 'hex')).toScriptSignature(bitcoin.Transaction.SIGHASH_ALL).toString('hex');
     this.setState({signature});
   }
@@ -57,7 +56,8 @@ export default class Home extends Component {
               </div>
               <div className="form-group">
                 <label>Sig Hash</label>
-                <input className="form-control" value={sigHash} onChange={this.handleOnChange} type="string" id="sigHash" />
+                <textarea className="form-control" spellCheck="false" value={sigHash} onChange={this.handleOnChange} id="sigHash" rows="3" placeholder="Sig hashes" required></textarea>
+                {/* <input className="form-control" value={sigHash} onChange={this.handleOnChange} type="textarea" id="sigHash" /> */}
               </div>
               <button type="button" className="btn btn-success" onClick={this.createSig}>
                 Sign
