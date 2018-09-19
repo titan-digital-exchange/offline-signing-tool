@@ -43,7 +43,7 @@ export default class Home extends Component {
       this.setState({ signatures });
     } catch (err) {
       const errorMessage = err.message;
-      this.setState({ errorMessage, signatures: [] })
+      this.setState({ errorMessage })
     }
   }
   handleSign = async () => {
