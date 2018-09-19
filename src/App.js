@@ -4,14 +4,21 @@ var bitcoin = require('bitcoinjs-lib');
 export default class Home extends Component {
   state = {
     wif: 'BuJRgDGLynQmN12yrS1kL4XGg8xzpySgGrWjdthsktgTZ9PfHnKF',
-    sigHash: 'f7b43605ca334a74ba8bfdfa4099d0f995844d6fe1f24175907bbe343a1197bf',
+    sigHashesRaw: '["f7b43605ca334a74ba8bfdfa4099d0f995844d6fe1f24175907bbe343a1197bf"]',
+    sigHashes: [],
     signature: null
   }
   handleOnChange = (e) => {
     const { id, value } = e.target;
     this.setState({ [id]: value });
   }
+  parseSigHashesRaw = async () => {
+    const { sigHashesRaw } = this.state;
+    const sigHashes = JSON.parse(sigHashesRaw) /* TODO safer implementation */;
+    await this.setState({ sigHashes });
+  };
   createSig = () => {
+    const { sigHashes, wif } = this.state;
     const network = {
       messagePrefix: '\x18Bitcoin Signed Message:\n',
       bech32: 'bc',
@@ -23,9 +30,15 @@ export default class Home extends Component {
       scriptHash: 0x1f,
       wif: 0x49
     };
-    const keyPair = bitcoin.ECPair.fromWIF(this.state.wif, network);
-    const signature = keyPair.sign(Buffer.from(this.state.sigHash, 'hex')).toScriptSignature(bitcoin.Transaction.SIGHASH_ALL).toString('hex');
-    this.setState({signature});
+    const keyPair = bitcoin.ECPair.fromWIF(wif, network);
+    for (let sigHash of sigHashes) {
+      const signature = keyPair.sign(Buffer.from(sigHash, 'hex')).toScriptSignature(bitcoin.Transaction.SIGHASH_ALL).toString('hex');
+      this.setState({ signature });
+    }
+  }
+  handleSign = async () => {
+    await this.parseSigHashesRaw();
+    this.createSig();
   }
   copyToClipboard = str => {
     const el = document.createElement('textarea');
@@ -37,9 +50,9 @@ export default class Home extends Component {
     el.select();
     document.execCommand('copy');
     document.body.removeChild(el);
-  }  
+  }
   render() {
-    const { wif, sigHash, signature } = this.state;
+    const { wif, sigHashesRaw, signature } = this.state;
     return (
       <div className="container">
         <div className="row">
@@ -55,11 +68,11 @@ export default class Home extends Component {
                 <input className="form-control" value={wif} onChange={this.handleOnChange} type="string" id="wif" />
               </div>
               <div className="form-group">
-                <label>Sig Hash</label>
-                <textarea className="form-control" spellCheck="false" value={sigHash} onChange={this.handleOnChange} id="sigHash" rows="3" placeholder="Sig hashes" required></textarea>
+                <label>Sig Hash (JSON)</label> {/* TODO better file format? */}
+                <textarea className="form-control" spellCheck="false" value={sigHashesRaw} onChange={this.handleOnChange} id="sigHashesRaw" rows="3" placeholder="Sig hashes" required></textarea>
                 {/* <input className="form-control" value={sigHash} onChange={this.handleOnChange} type="textarea" id="sigHash" /> */}
               </div>
-              <button type="button" className="btn btn-success" onClick={this.createSig}>
+              <button type="button" className="btn btn-success" onClick={this.handleSign}>
                 Sign
               </button>
             </form>
