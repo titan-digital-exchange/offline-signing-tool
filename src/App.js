@@ -50,6 +50,16 @@ export default class Home extends Component {
     document.execCommand('copy');
     document.body.removeChild(el);
   }
+  // https://stackoverflow.com/questions/19721439/download-json-object-as-a-file-from-browser
+  downloadObjectAsJson(exportObj, exportName){
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+    var downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href",     dataStr);
+    downloadAnchorNode.setAttribute("download", exportName + ".json");
+    document.body.appendChild(downloadAnchorNode); // required for firefox
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+  }
   render() {
     const { wif, sigHashesRaw, signatures } = this.state;
     let signaturesRaw;
@@ -93,6 +103,13 @@ export default class Home extends Component {
               {signaturesRaw && <div>
                 <pre className="mb-0">{signaturesRaw}</pre>
                 <button
+                  type="button"
+                  style={{ marginTop: '1rem', marginRight: '.5rem' }}
+                  className="btn btn-primary"
+                  onClick={() => this.downloadObjectAsJson(signatures /* not signaturesRaw */, 'signatures')}
+                >Download File</button>
+                <button
+                  type="button"
                   style={{ marginTop: '1rem' }}
                   className="btn btn-info"
                   onClick={() => this.copyToClipboard(signaturesRaw)}
