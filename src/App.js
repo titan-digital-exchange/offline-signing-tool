@@ -6,7 +6,7 @@ export default class Home extends Component {
     wif: 'BuJRgDGLynQmN12yrS1kL4XGg8xzpySgGrWjdthsktgTZ9PfHnKF',
     sigHashesRaw: '["f7b43605ca334a74ba8bfdfa4099d0f995844d6fe1f24175907bbe343a1197bf"]',
     sigHashes: [],
-    signature: null
+    signatures: []
   }
   handleOnChange = (e) => {
     const { id, value } = e.target;
@@ -16,8 +16,9 @@ export default class Home extends Component {
     const { sigHashesRaw } = this.state;
     const sigHashes = JSON.parse(sigHashesRaw) /* TODO safer implementation */;
     await this.setState({ sigHashes });
-  };
+  }
   createSig = () => {
+    const sign = (keyPair, sigHash) => keyPair.sign(Buffer.from(sigHash, 'hex')).toScriptSignature(bitcoin.Transaction.SIGHASH_ALL).toString('hex');
     const { sigHashes, wif } = this.state;
     const network = {
       messagePrefix: '\x18Bitcoin Signed Message:\n',
@@ -31,10 +32,8 @@ export default class Home extends Component {
       wif: 0x49
     };
     const keyPair = bitcoin.ECPair.fromWIF(wif, network);
-    for (let sigHash of sigHashes) {
-      const signature = keyPair.sign(Buffer.from(sigHash, 'hex')).toScriptSignature(bitcoin.Transaction.SIGHASH_ALL).toString('hex');
-      this.setState({ signature });
-    }
+    const signatures = sigHashes.map(sigHash => sign(keyPair, sigHash));
+    this.setState({ signatures });
   }
   handleSign = async () => {
     await this.parseSigHashesRaw();
@@ -52,7 +51,11 @@ export default class Home extends Component {
     document.body.removeChild(el);
   }
   render() {
-    const { wif, sigHashesRaw, signature } = this.state;
+    const { wif, sigHashesRaw, signatures } = this.state;
+    let signaturesRaw;
+    if (signatures.length > 0) {
+      signaturesRaw = JSON.stringify(signatures);
+    }
     return (
       <div className="container">
         <div className="row">
@@ -77,13 +80,13 @@ export default class Home extends Component {
               </button>
             </form>
             <div className="alert alert-success" style={{ marginTop: '1rem' }}>
-              <h4 className="alert-heading">Signature</h4>
-              {signature && <div>
-                <pre className="mb-0">{signature}</pre>
+              <h4 className="alert-heading">Signatures (JSON)</h4>
+              {signaturesRaw && <div>
+                <pre className="mb-0">{signaturesRaw}</pre>
                 <button
                   style={{ marginTop: '1rem' }}
                   className="btn btn-info"
-                  onClick={() => this.copyToClipboard(signature)}
+                  onClick={() => this.copyToClipboard(signaturesRaw)}
                 >Copy</button>
               </div>}
             </div>
