@@ -72,10 +72,19 @@ export default class Home extends Component {
               </div>
               <div className="form-group">
                 <label>Sig Hash (JSON)</label> {/* TODO better file format? */}
+                <input type="file" className="form-control-file"
+                style={{marginBottom: '.5rem'}}
+                onChange={e => {
+                  const file = e.target.files[0];
+                  const fileReader = new FileReader();
+                  fileReader.addEventListener('load', () => this.setState({ sigHashesRaw: fileReader.result }));
+                  fileReader.readAsText(file);
+                }}
+                ></input>
                 <textarea className="form-control" spellCheck="false" value={sigHashesRaw} onChange={this.handleOnChange} id="sigHashesRaw" rows="3" placeholder="Sig hashes" required></textarea>
                 {/* <input className="form-control" value={sigHash} onChange={this.handleOnChange} type="textarea" id="sigHash" /> */}
               </div>
-              <button type="button" className="btn btn-success" onClick={this.handleSign}>
+              <button type="button" className="btn btn-block btn-success" onClick={this.handleSign}>
                 Sign
               </button>
             </form>
