@@ -42,39 +42,50 @@ export default class Home extends Component {
   render() {
     const { wif, sigHash, signature } = this.state;
     return (
-      <div className="container">
+      <div className="container-fluid">
         <div className="row">
-          <div className="col">
-            <h2>Offline Signing Tool</h2>
+          <div className="col-xs mr-auto">
+              <img className="img-fluid" style={{width: '4rem'}} src="/public/icons/Titan_Logo_BrandMark_DropShadow.png" alt=""/>
           </div>
         </div>
-        <div className="row">
-          <div className="col">
-            <form>
-              <div className="form-group">
-                <label>WIF</label>
-                <input className="form-control" value={wif} onChange={this.handleOnChange} type="string" id="wif" />
-              </div>
-              <div className="form-group">
-                <label>Sig Hash</label>
-                <input className="form-control" value={sigHash} onChange={this.handleOnChange} type="string" id="sigHash" />
-              </div>
-              <button type="button" className="btn btn-success" onClick={this.createSig}>
-                Sign
-              </button>
-            </form>
-            <div className="alert alert-success" style={{ marginTop: '1rem' }}>
-              <h4 className="alert-heading">Signature</h4>
-              {signature && <div>
-                <pre className="mb-0">{signature}</pre>
-                <button
-                  style={{ marginTop: '1rem' }}
-                  className="btn btn-info"
-                  onClick={() => this.copyToClipboard(signature)}
-                >Copy</button>
-              </div>}
+        <div className="container">
+            <div className="row">
+                <div className="card col-xs mx-auto" style={{padding: '3rem',minWidth: '30rem'}}>
+                    <form>
+                        <h2 className="text-center">Offline Signing Tool</h2>
+                        <div className="form-group">
+                            <label>WIF</label>
+                            <input className="form-control" value={wif} onChange={this.handleOnChange} type="string" id="wif" />
+                        </div>
+                        <div className="form-group">
+                            <label>Sig Hash</label>
+                            <input className="form-control" value={sigHash} onChange={this.handleOnChange} type="string" id="sigHash" />
+                        </div>
+                        <div className="col-xs mx-auto text-center">
+                            <div className="orangeButton" onClick={this.createSig}>
+                                <div style={{margin:'auto'}}>
+                                    Sign
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div className="alert alert-success" style={{ marginTop: '1rem' }}>
+                        <h4 className="alert-heading text-center">Signature</h4>
+                        {signature && <div>
+                            <pre className="mb-0">{signature}</pre>
+                            <div
+                                style={{ marginTop: '1rem' }}
+                                className="orangeButton"
+                                onClick={() => this.copyToClipboard(signature)}
+                            >
+                                <div style={{margin:'auto'}}>
+                                    Copy
+                                </div>
+                            </div>
+                        </div>}
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
       </div>
     );
