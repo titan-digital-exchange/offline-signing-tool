@@ -3,8 +3,8 @@ var bitcoin = require('bitcoinjs-lib');
 
 export default class Home extends Component {
   state = {
-    wif:'BuJRgDGLynQmN12yrS1kL4XGg8xzpySgGrWjdthsktgTZ9PfHnKF',
-    sigHashesRaw: '["f7b43605ca334a74ba8bfdfa4099d0f995844d6fe1f24175907bbe343a1197bf"]',
+    wif:null, //'BuJRgDGLynQmN12yrS1kL4XGg8xzpySgGrWjdthsktgTZ9PfHnKF',
+    sigHashesRaw: null, // '["f7b43605ca334a74ba8bfdfa4099d0f995844d6fe1f24175907bbe343a1197bf"]',
     sigHashes: [],
     signatures: [],
     errorMessage: null
