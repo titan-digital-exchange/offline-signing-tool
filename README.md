@@ -22,6 +22,15 @@
              xxxxx                                       
 ## About
 This tool lets the user sign bitcoin transactions (sig hashes) without sending private keys.
+## Instructions
+1. Navigate to [development URL](http://titan-digital-exchange.github.io/offline-signing-tool) or spin up the app with `yarn start` (after cloning 
+of course with `git clone git@github.com:titan-digital-exchange/offline-signing-tool.git`)
+2. Input your [WIF](https://en.bitcoin.it/wiki/Wallet_import_format)
+3. Upload your Sig Hashes file (obtained from [lannister-beta](https://lannister-beta.herokuapp.com/))
+4. Press sign
+5. Press download
+6. Input signed hashes to lannister
+
 ## Getting started
 ### Development
 1. `yarn install`
