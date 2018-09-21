@@ -3,8 +3,8 @@ var bitcoin = require('bitcoinjs-lib');
 
 export default class Home extends Component {
   state = {
-    wif: null, //'BuJRgDGLynQmN12yrS1kL4XGg8xzpySgGrWjdthsktgTZ9PfHnKF',
-    sigHashesRaw: null, //'["f7b43605ca334a74ba8bfdfa4099d0f995844d6fe1f24175907bbe343a1197bf"]',
+    wif:'BuJRgDGLynQmN12yrS1kL4XGg8xzpySgGrWjdthsktgTZ9PfHnKF',
+    sigHashesRaw: '["f7b43605ca334a74ba8bfdfa4099d0f995844d6fe1f24175907bbe343a1197bf"]',
     sigHashes: [],
     signatures: [],
     errorMessage: null
@@ -113,16 +113,21 @@ export default class Home extends Component {
                           <h4 className="alert-heading">Error</h4>
                           {errorMessage}
                       </div>}
-                      {signaturesRaw && <div className="alert alert-success" style={{ marginTop: '1rem' }}>
+                      {signaturesRaw && <div className="alert alert-success " style={{ marginTop: '1rem' }}>
                           <h4 className="alert-heading">Signatures (JSON)</h4>
                           {signaturesRaw && <div>
                               <pre className="mb-0">{signaturesRaw}</pre>
-                              <button
-                                  type="button"
-                                  style={{ marginTop: '1rem', marginRight: '.5rem' }}
-                                  className="btn btn-primary"
-                                  onClick={() => this.downloadObjectAsJson(signatures /* not signaturesRaw */, 'signatures')}
-                              >Download File</button>
+                              <div className="row">
+                                  <div
+                                      style={{ marginTop: '1rem', marginRight: '.5rem' }}
+                                      className="orangeButton mx-auto "
+                                      onClick={() => this.downloadObjectAsJson(signatures /* not signaturesRaw */, 'signatures')}
+                                  >
+                                      <div style={{margin: 'auto'}}>
+                                          Download File
+                                      </div>
+                                  </div>
+                              </div>
                           </div>}
                       </div>}
                   </div>
