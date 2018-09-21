@@ -1,5 +1,6 @@
 {
   "name": "offline-signing-tool",
+  "homepage": "http://titan-digital-exchange.github.io/offline-signing-tool",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -13,10 +14,13 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "electron": "electron ."
+    "electron": "electron .",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "main": "src/electron-starter.js",
   "devDependencies": {
-    "electron": "^3.0.0"
+    "electron": "^3.0.0",
+    "gh-pages": "^2.0.0"
   }
 }
