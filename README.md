@@ -22,6 +22,8 @@
              xxxxx                                       
 ## About
 This tool lets the user sign bitcoin transactions (sig hashes) without sending private keys.
+## Development link
+[Link to development version](https://titan-digital-exchange.github.io/offline-signing-tool/)
 ## Instructions
 1. Navigate to [development URL](http://titan-digital-exchange.github.io/offline-signing-tool) or spin up the app with `yarn start` (after cloning 
 of course with `git clone git@github.com:titan-digital-exchange/offline-signing-tool.git`)
