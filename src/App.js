@@ -72,7 +72,7 @@ export default class Home extends Component {
         <div className="row">
           <div className="col">
             <h2>Offline Signing Tool</h2>
-            <h4><a href="https://github.com/titan-digital-exchange/lannister/blob/master/README.md">Instructions</a></h4>
+            <h4><a href="https://github.com/titan-digital-exchange/offline-signing-tool/blob/master/README.md">Instructions</a></h4>
           </div>
         </div>
         <div className="row">
